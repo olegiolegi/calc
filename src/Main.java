@@ -47,7 +47,7 @@ class Main {
             b = convertRomanToInt(b1);
             int temp = count(a, b, operator);
             if (temp <= 0) throw new Exception("В римской системе нет отрицательных чисел и нуля");
-            ret = temp + "";
+            ret = convertIntToRoman(temp) + "";
         } else if ( (Arrays.asList(roman).contains(a1) && isInteger(b1)) ||
                 (isInteger(a1) && Arrays.asList(roman).contains(b1)) ) throw new Exception("Используются одновременно разные системы счисления");
 
@@ -114,6 +114,29 @@ class Main {
         }
 
         return number;
+    }
+
+    public static String convertIntToRoman(int num)
+    {
+        var keys = new String[] { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+        var vals = new int[] { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+
+        StringBuilder ret = new StringBuilder();
+        int ind = 0;
+
+        while(ind < keys.length)
+        {
+            while(num >= vals[ind])
+            {
+                var d = num / vals[ind];
+                num = num % vals[ind];
+                for(int i=0; i<d; i++)
+                    ret.append(keys[ind]);
+            }
+            ind++;
+        }
+
+        return ret.toString();
     }
 
 
